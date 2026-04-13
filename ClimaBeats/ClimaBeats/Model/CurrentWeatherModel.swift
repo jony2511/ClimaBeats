@@ -3,17 +3,6 @@
 //  ClimaBeats
 //
 //
-
-
-
-
-
-
-
-
-
-
-
 import Foundation
 
 struct CurrentData:Codable
