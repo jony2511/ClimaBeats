@@ -1,0 +1,158 @@
+//
+//  LogInViewController.swift
+//  ClimaBeats
+//
+//  
+//
+
+import UIKit
+
+class LogInViewController: UIViewController {
+
+    private let viewModel = LoginViewModel()
+
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var loginButton: UIButton!
+    
+    @IBOutlet var logo2: UIImageView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpElements()
+        passwordTextField.isSecureTextEntry = true
+        // Do any additional setup after loading the view.
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        Utilities.styleTextField(emailTextField)
+        Utilities.styleTextField(passwordTextField)
+    }
+
+    func setUpElements ()
+    {
+        errorLabel.alpha = 0
+       
+        Utilities.styleTextField(emailTextField)
+        Utilities.styleTextField(passwordTextField)
+        Utilities.styleFilledButton(loginButton)
+    }
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+    @IBAction func loginButtonTapped(_ sender: Any) {
+        //Validate Text Fields
+        
+        let email = emailTextField.text!.trimmingCharacters(in:.whitespacesAndNewlines)
+        let password = passwordTextField.text!.trimmingCharacters(in:.whitespacesAndNewlines)
+        
+        //Signing in the user
+        viewModel.signIn(email: email, password: password) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                let weatherViewController = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.weatherViewController) as? WeatherViewController
+                self.view.window?.rootViewController = weatherViewController
+                self.view.window?.makeKeyAndVisible()
+            case .failure(let error):
+                self.errorLabel.text = error.localizedDescription
+                self.errorLabel.alpha = 1
+            }
+        }
+    }
+    
+    @IBAction func gobck(_ sender: Any) {
+        let ViewController = storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.ViewController) as? ViewController
+        view.window?.rootViewController = ViewController
+        view.window?.makeKeyAndVisible()
+    }
+}
+//
+//  LogInViewController.swift
+//  ClimaBeats
+//
+//  
+//
+
+import UIKit
+
+class LogInViewController: UIViewController {
+
+    private let viewModel = LoginViewModel()
+
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var loginButton: UIButton!
+    
+    @IBOutlet var logo2: UIImageView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpElements()
+        passwordTextField.isSecureTextEntry = true
+        // Do any additional setup after loading the view.
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        Utilities.styleTextField(emailTextField)
+        Utilities.styleTextField(passwordTextField)
+    }
+
+    func setUpElements ()
+    {
+        errorLabel.alpha = 0
+       
+        Utilities.styleTextField(emailTextField)
+        Utilities.styleTextField(passwordTextField)
+        Utilities.styleFilledButton(loginButton)
+    }
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+    @IBAction func loginButtonTapped(_ sender: Any) {
+        //Validate Text Fields
+        
+        let email = emailTextField.text!.trimmingCharacters(in:.whitespacesAndNewlines)
+        let password = passwordTextField.text!.trimmingCharacters(in:.whitespacesAndNewlines)
+        
+        //Signing in the user
+        viewModel.signIn(email: email, password: password) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                let weatherViewController = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.weatherViewController) as? WeatherViewController
+                self.view.window?.rootViewController = weatherViewController
+                self.view.window?.makeKeyAndVisible()
+            case .failure(let error):
+                self.errorLabel.text = error.localizedDescription
+                self.errorLabel.alpha = 1
+            }
+        }
+    }
+    
+    @IBAction func gobck(_ sender: Any) {
+        let ViewController = storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.ViewController) as? ViewController
+        view.window?.rootViewController = ViewController
+        view.window?.makeKeyAndVisible()
+    }
+}
